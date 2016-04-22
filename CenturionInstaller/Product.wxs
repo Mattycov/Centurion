@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define Centurion_TargetDir=$(var.Centurion.TargetDir)?>
+  <Product Id="*" Name="Centurion" Language="1033" Version="1.0.0.0" Manufacturer="Matt Collinge" UpgradeCode="b145d690-e7ef-4a20-9b01-cd374f6502ba">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <Icon Id="icon.ico" SourceFile="$(var.Centurion_TargetDir)icon.ico"/>
+    
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
+
+    <Feature Id="ProductFeature" Title="Centurion" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="CenturionShortcutCmp" />
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Centurion" />
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="CenturionProgramMenuFolder" Name="Centurion"/>
+      </Directory>
+    </Directory>
+    <DirectoryRef Id="CenturionProgramMenuFolder">
+      <Component Id="CenturionShortcutCmp" Guid="{CAD9C9A6-1C5A-4CE1-A4FA-7D0E7B9CD37E}">
+        <Shortcut Id="ProgramMenuCenturionShortcut" Name="Centurion" Description="Centurion Drinking game media helper" Target="[INSTALLFOLDER]\Centurion.exe" Icon="icon.ico" />
+        <RemoveFolder Id="RemoveMyShortcutsDir" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\Centurion\Centurion" Name="ProgramMenuCenturionShortcutInstalled" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="Xceed.Wpf.AvalonDock.dll" Guid="89690f38-a710-4c81-926d-3eae21744744">
+        <File Id="Xceed.Wpf.AvalonDock.dll" Name="Xceed.Wpf.AvalonDock.dll" Source="$(var.Centurion_TargetDir)Xceed.Wpf.AvalonDock.dll" />
+      </Component>
+      <Component Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Guid="15c80e21-dc4b-4ae5-a279-d4151d6e142e">
+        <File Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Name="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Source="$(var.Centurion_TargetDir)Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
+      </Component>
+      <Component Id="Xceed.Wpf.AvalonDock.Themes.Metro.dll" Guid="561a5583-6189-4813-bb2b-844983e97df1">
+        <File Id="Xceed.Wpf.AvalonDock.Themes.Metro.dll" Name="Xceed.Wpf.AvalonDock.Themes.Metro.dll" Source="$(var.Centurion_TargetDir)Xceed.Wpf.AvalonDock.Themes.Metro.dll" />
+      </Component>
+      <Component Id="Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Guid="5045b2b5-9b9f-4709-836c-1194766835f1">
+        <File Id="Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Name="Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Source="$(var.Centurion_TargetDir)Xceed.Wpf.AvalonDock.Themes.VS2010.dll" />
+      </Component>
+      <Component Id="Xceed.Wpf.DataGrid.dll" Guid="5135f8e2-4e8f-499a-853c-a5ab9d9c4751">
+        <File Id="Xceed.Wpf.DataGrid.dll" Name="Xceed.Wpf.DataGrid.dll" Source="$(var.Centurion_TargetDir)Xceed.Wpf.DataGrid.dll" />
+      </Component>
+      <Component Id="Xceed.Wpf.Toolkit.dll" Guid="c4bec022-4153-4d30-9c57-bf0c83f2bc3a">
+        <File Id="Xceed.Wpf.Toolkit.dll" Name="Xceed.Wpf.Toolkit.dll" Source="$(var.Centurion_TargetDir)Xceed.Wpf.Toolkit.dll" />
+      </Component>
+      <Component Id="WindowsInput.dll" Guid="88129caf-aa8d-4259-92de-8e59f7c4b79b">
+        <File Id="WindowsInput.dll" Name="WindowsInput.dll" Source="$(var.Centurion_TargetDir)WindowsInput.dll" />
+      </Component>
+      <Component Id="Microsoft.Expression.Interactions.dll" Guid="22269b6d-8596-4fbf-994a-e62c05376ebd">
+        <File Id="Microsoft.Expression.Interactions.dll" Name="Microsoft.Expression.Interactions.dll" Source="$(var.Centurion_TargetDir)Microsoft.Expression.Interactions.dll" />
+      </Component>
+      <Component Id="System.Windows.Interactivity.dll" Guid="bb48d977-1b25-4124-99ee-361fe02addfa">
+        <File Id="System.Windows.Interactivity.dll" Name="System.Windows.Interactivity.dll" Source="$(var.Centurion_TargetDir)System.Windows.Interactivity.dll" />
+      </Component>
+      <Component Id="Centurion.exe" Guid="c78c1648-29f5-4b75-b1bc-8e6e2000bacc">
+        <File Id="Centurion.exe" Name="Centurion.exe" Source="$(var.Centurion_TargetDir)Centurion.exe" />
+      </Component>
+      <Component Id="Centurion.exe.config" Guid="50b0b2af-298a-4f9e-bc33-f69381049b13">
+        <File Id="Centurion.exe.config" Name="Centurion.exe.config" Source="$(var.Centurion_TargetDir)Centurion.exe.config" />
+      </Component>
+      <Component Id="icon.ico" Guid="1efd1ac9-cd72-42d0-8443-e195a3262b6c">
+        <File Id="icon.ico" Name="icon.ico" Source="$(var.Centurion_TargetDir)icon.ico" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
